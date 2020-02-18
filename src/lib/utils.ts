@@ -3,7 +3,7 @@ import { HttpResponse } from '@angular/common/http';
 import { MockRoute, MockRequest } from './constants';
 
 export const resolvePath = (...args: string[]) => {
-    return args.join('/').replace(/\/+/g, '/')
+    return args.join('/').replace(/\/+/g, '/');
 };
 
 export const firstValidNumber = (...objects: any[]) => {
@@ -36,8 +36,8 @@ export const fetchQuery = (target: string, pattern: string) => {
         }
     }
 
-    return query
-}
+    return query;
+};
 
 export const createHttpResponse = (object: any) => {
     if (object instanceof HttpResponse) {

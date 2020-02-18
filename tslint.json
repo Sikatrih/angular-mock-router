@@ -1,6 +1,5 @@
 {
     "extends": "tslint:recommended",
-    "rulesDirectory": ["codelyzer"],
     "rules": {
         "array-type": false,
         "arrow-parens": false,
@@ -37,17 +36,10 @@
         "ordered-imports": false,
         "quotemark": [true, "single"],
         "trailing-comma": false,
-        "no-output-on-prefix": true,
-        "use-input-property-decorator": true,
-        "use-output-property-decorator": true,
-        "use-host-property-decorator": true,
         "no-input-rename": false,
         "variable-name": false,
         "object-literal-shorthand": false,
         "no-output-rename": false,
-        "use-life-cycle-interface": true,
-        "use-pipe-transform-interface": true,
-        "component-class-suffix": true,
-        "directive-class-suffix": true
+        "jsdoc-format": false
     }
 }
