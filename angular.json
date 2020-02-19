@@ -27,10 +27,6 @@
                             "demo/assets"
                         ],
                         "styles": [
-                            "node_modules/@qlearsite/css-utils/scss/css-utils.scss",
-                            "node_modules/@qlearsite/assets/fontawesome/styles/fontawesome.scss",
-                            "node_modules/@qlearsite/assets/proxima-nova/styles/proxima-nova.scss",
-                            "node_modules/@qlearsite/assets/univers/styles/univers.scss",
                             "demo/styles.scss"
                         ]
                     },

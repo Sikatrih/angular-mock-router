@@ -1,5 +1,3 @@
 {
-    "extends": [
-        "@qlearsite/stylelint-qlearsite"
-    ]
+    "extends": "stylelint-config-recommended"
 }

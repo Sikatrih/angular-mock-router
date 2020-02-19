@@ -1,5 +1,5 @@
 {
-  "name": "angular-mock",
+  "name": "angular-mock-router",
   "version": "0.0.1",
   "scripts": {
     "start": "ng serve demo",
@@ -8,7 +8,7 @@
     "test": "ng lint && npm run headless",
     "coverage": "ng test --code-coverage",
     "headless": "ng test --watch=false --browsers=ChromeHeadless",
-    "release": "npm run test && npm run build"
+    "release": "npm run test && npm run build && cd ./release && npm publish"
   },
   "husky": {
     "hooks": {
@@ -33,6 +33,7 @@
     "@angular/router": "^7.2.7",
     "@commitlint/cli": "^7.5.2",
     "@commitlint/config-conventional": "^7.5.0",
+    "angular-gridster2": "^9.0.1",
     "core-js": "^2.6.5",
     "rxjs": "^6.4.0",
     "zone.js": "~0.8.29"
@@ -43,19 +44,20 @@
     "@angular/cli": "^7.3.4",
     "@angular/compiler-cli": "^7.2.9",
     "@angular/language-service": "^7.2.7",
-    "@types/node": "~8.9.4",
     "@types/jasmine": "^3.3.13",
     "@types/jasminewd2": "~2.0.3",
+    "@types/node": "~8.9.4",
+    "husky": "^1.3.1",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "^4.1.0",
     "karma-chrome-launcher": "^2.2.0",
+    "karma-coverage-istanbul-reporter": "^2.0.5",
     "karma-jasmine": "^2.0.1",
     "karma-jasmine-html-reporter": "^1.4.2",
-    "karma-coverage-istanbul-reporter": "^2.0.5",
-    "husky": "^1.3.1",
     "ng-packagr": "^4.7.1",
     "stylelint": "^9.10.1",
+    "stylelint-config-recommended": "^3.0.0",
     "ts-node": "~5.0.1",
     "tsickle": "^0.34.3",
     "tslib": "^1.9.0",
