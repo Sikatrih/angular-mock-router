@@ -1,6 +1,6 @@
 {
   "name": "angular-mock-router",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "scripts": {
     "build": "ng build lib --prod",
     "test": "ng lint && npm run headless",
