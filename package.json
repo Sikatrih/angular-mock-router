@@ -2,10 +2,9 @@
   "name": "angular-mock-router",
   "version": "0.0.2",
   "scripts": {
-    "start": "ng serve demo",
     "build": "ng build lib --prod",
-    "spec": "ng test",
     "test": "ng lint && npm run headless",
+    "spec": "ng test",
     "coverage": "ng test --code-coverage",
     "headless": "ng test --watch=false --browsers=ChromeHeadless",
     "release": "npm run test && npm run build && cd ./release && npm publish"
