@@ -1,28 +1,34 @@
 import { Injectable, Inject } from '@angular/core';
-import { HttpEvent, HttpHandler, HttpInterceptor } from '@angular/common/http';
+import { HttpHandler, HttpInterceptor } from '@angular/common/http';
 import { delay, tap } from 'rxjs/operators';
-import { Observable, of } from 'rxjs';
+import { of } from 'rxjs';
 
-import { MOCK_CONFIG, IMockConfig, MockRequest } from './constants';
+import { MOCK_CONFIG, MockConfig, MockRequest, DEFAULT_DELAY } from './constants';
 import { resolvePath, firstValidNumber, fetchQuery, createHttpResponse, logResponse } from './utils';
 
 @Injectable()
 export class MockInterceptor implements HttpInterceptor {
 
-    constructor(@Inject(MOCK_CONFIG) private config: IMockConfig) {}
+    constructor(@Inject(MOCK_CONFIG) private config: MockConfig) {}
 
-    intercept(request: MockRequest, next: HttpHandler): Observable<HttpEvent<any>> {
+    intercept(request: MockRequest, next: HttpHandler) {
         if (!this.config.disabled) {
             for (const route of this.config.routes) {
-                const url = resolvePath(this.config.prefix || '', route.url);
-                const query = fetchQuery(request.url, url);
+                const pattern = resolvePath(this.config.prefix || '', route.url);
+                const query = fetchQuery(request.url, pattern);
 
                 if (query && request.method === route.method) {
-                    const result = route.handler(Object.assign(request, query));
-                    const response = createHttpResponse(result);
+                    request.query = query;
+
+                    const response = createHttpResponse(route.handler(request));
+                    const responseDelay = firstValidNumber(
+                        route.delay,
+                        this.config.delay,
+                        DEFAULT_DELAY
+                    );
 
                     return of(response).pipe(
-                        delay(firstValidNumber(route.delay, this.config.delay, 100)),
+                        delay(responseDelay),
                         tap(() => {
                             (this.config.logResponse || logResponse)(route, request, response);
                         })

@@ -18,7 +18,7 @@ export interface MockRoute {
 
 export type MockRoutes = MockRoute[];
 
-export interface IMockConfig {
+export interface MockConfig {
     routes: MockRoutes;
     delay?: number;
     prefix?: string;
@@ -26,4 +26,11 @@ export interface IMockConfig {
     logResponse?: (route: MockRoute, request: MockRequest, response: HttpResponse<any>) => void;
 }
 
-export const MOCK_CONFIG = new InjectionToken<IMockConfig>('mock.config', {providedIn: 'root', factory: () => ({routes: []})});
+export const MOCK_CONFIG = new InjectionToken<MockConfig>('mock.config',
+    {
+        providedIn: 'root',
+        factory: () => ({routes: []})
+    }
+);
+
+export const DEFAULT_DELAY = 100;

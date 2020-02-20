@@ -32,7 +32,7 @@ export const fetchQuery = (target: string, pattern: string) => {
 
             query[propertyKey] = requestUrlObject[i];
         } else if (requestUrlObject[i] !== routeUrlObject[i]) {
-            break;
+            return null;
         }
     }
 
@@ -45,7 +45,7 @@ export const createHttpResponse = (object: any) => {
     }
 
     if (object === null || object === undefined) {
-        return new HttpResponse({body: object, status: 500});
+        return new HttpResponse({status: 204});
     }
 
     return new HttpResponse({body: object, status: 200});

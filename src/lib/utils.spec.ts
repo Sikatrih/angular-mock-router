@@ -39,17 +39,17 @@ describe('Utils', () => {
 
     describe('fetchQuery', () => {
         it('should return "null" if paths has different length', () => {
+            expect(fetchQuery('myusers', 'users')).toBe(null);
             expect(fetchQuery('users/', 'users/10')).toBe(null);
             expect(fetchQuery('users/10/info', 'users/:id')).toBe(null);
             expect(fetchQuery('users/10', 'users/:id/info')).toBe(null);
-        });
-
-        it('should return empty object', () => {
-            expect(fetchQuery('users/10', 'users/id')).toEqual({});
-            expect(fetchQuery('', '')).toEqual({});
+            expect(fetchQuery('users/10', 'users/id')).toEqual(null);
         });
 
         it('should return object with id 10', () => {
+            expect(fetchQuery('user', 'user')).toEqual({});
+            expect(fetchQuery('/user/', 'user')).toEqual({});
+            expect(fetchQuery('user', '/user/')).toEqual({});
             expect(fetchQuery('user/10', 'user/:id')).toEqual({id: '10'});
             expect(fetchQuery('user/10/info', 'user/:id/:section'))
                 .toEqual({id: '10', section: 'info'});
@@ -88,10 +88,10 @@ describe('Utils', () => {
 
         it('should return response with error if it gets', () => {
             expect(createHttpResponse(null))
-                .toEqual(new HttpResponse({body: null, status: 500}));
+                .toEqual(new HttpResponse({body: null, status: 204}));
 
             expect(createHttpResponse(undefined))
-                .toEqual(new HttpResponse({body: undefined, status: 500}));
+                .toEqual(new HttpResponse({body: undefined, status: 204}));
         });
     });
 

@@ -2,11 +2,11 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { MockInterceptor } from './interceptor';
-import { IMockConfig, MOCK_CONFIG } from './constants';
+import { MockConfig, MOCK_CONFIG } from './constants';
 
 @NgModule()
 export class MockModule {
-    public static forRoot(config: IMockConfig): ModuleWithProviders {
+    public static forRoot(config: MockConfig): ModuleWithProviders {
         return {
             ngModule: MockModule,
             providers: [

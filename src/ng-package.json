@@ -3,6 +3,6 @@
   "dest": "../release",
   "deleteDestPath": false,
   "lib": {
-    "entryFile": "lib/public-api.ts"
+    "entryFile": "lib/public_api.ts"
   }
 }
