@@ -1,17 +1,17 @@
 {
     "name": "angular-mock-router",
-    "version": "0.0.4",
+    "version": "0.0.5",
     "description": "lightweight tool that intercepts Http Requests and send you your own responses instead backend",
     "author": "Abramian Amaiak",
     "repository": {
-      "type": "git",
-      "url": "git+https://github.com/Sikatrih/angular-mock-router"
+        "type": "git",
+        "url": "git+https://github.com/Sikatrih/angular-mock-router"
     },
     "keywords": [
-      "angular",
-      "fake data",
-      "mock",
-      "mocks"
+        "angular",
+        "fake data",
+        "mock",
+        "mocks"
     ],
     "peerDependencies": {
         "@angular/common": "^7.0.0",

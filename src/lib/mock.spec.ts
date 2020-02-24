@@ -172,7 +172,7 @@ describe('Interceptor', () => {
         @NgModule({
             imports: [
                 HttpClientModule,
-                MockModule.forRoot({routes, delay: 0})
+                MockRouterModule.forRoot({routes, delay: 0})
             ],
             declarations: [HostComponent]
         })

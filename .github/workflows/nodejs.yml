@@ -18,7 +18,12 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
     - run: npm install
-    - run: npm run build --if-present
     - run: npm test
+    - run: npm run build
+    - run: cp ./src/README.md ./release
+    - run: cd ./src && npm version patch
+    - run: cd ./release && npm version patch
+    - run: npm config set '//registry.npmjs.org/:_authToken' "${{secrets.NPM_AUTH_TOKEN}}"
+    - run: cd ./release && npm publish
       env:
         CI: true

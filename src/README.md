@@ -8,7 +8,7 @@
 import { NgModule, Component, Input } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { 
-    MockModule, 
+    MockRouterModule, 
     MockRoutes 
 } from 'angular-mock-router';
 
@@ -32,7 +32,7 @@ const mockRoutes: MockRoutes = [
 
 @NgModule({
   imports: [
-    MockModule.forRoot({
+    MockRouterModule.forRoot({
         routes: mockRoutes,
         disabled: !environment.production, // allow to disable module
         delay: 50 // set timeout for all responses, default delay - 100ms
