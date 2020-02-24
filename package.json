@@ -1,13 +1,12 @@
 {
   "name": "angular-mock-router",
-  "version": "0.0.3",
+  "version": "0.0.5",
   "scripts": {
     "build": "ng build lib --prod",
     "test": "ng lint && npm run headless",
     "spec": "ng test",
     "coverage": "ng test --code-coverage",
-    "headless": "ng test --watch=false --browsers=ChromeHeadless",
-    "release": "npm run test && npm run build && cd ./release && npm publish"
+    "headless": "ng test --watch=false --browsers=ChromeHeadless"
   },
   "husky": {
     "hooks": {
@@ -21,18 +20,15 @@
   },
   "private": false,
   "dependencies": {
-    "@angular/animations": "^7.2.7",
     "@angular/common": "^7.2.7",
     "@angular/compiler": "^7.2.7",
     "@angular/core": "^7.2.7",
-    "@angular/forms": "^7.2.7",
     "@angular/http": "^7.2.7",
     "@angular/platform-browser": "^7.2.7",
     "@angular/platform-browser-dynamic": "^7.2.7",
     "@angular/router": "^7.2.7",
     "@commitlint/cli": "^7.5.2",
     "@commitlint/config-conventional": "^7.5.0",
-    "angular-gridster2": "^9.0.1",
     "core-js": "^2.6.5",
     "rxjs": "^6.4.0",
     "zone.js": "~0.8.29"
