@@ -1,1 +1,2 @@
-export { MockModule } from './mock.module';
+export { MockRouterModule } from './mock.module';
+export { MockRoute, MockRoutes, MockConfig, MockRequest } from './constants';

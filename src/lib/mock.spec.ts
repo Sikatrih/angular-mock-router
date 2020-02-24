@@ -1,8 +1,8 @@
 /* tslint:disable */
 import { Component, NgModule } from '@angular/core';
-import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MockModule } from './mock.module';
+import { MockRouterModule } from './mock.module';
 import { MockRoutes, MockConfig } from './constants';
 import { HttpClient, HttpClientModule, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
@@ -189,7 +189,7 @@ describe('Interceptor', () => {
             @NgModule({
                 imports: [
                     HttpClientModule,
-                    MockModule.forRoot(config)
+                    MockRouterModule.forRoot(config)
                 ],
                 declarations: [HostComponent]
             })
