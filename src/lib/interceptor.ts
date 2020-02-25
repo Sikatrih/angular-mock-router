@@ -12,28 +12,26 @@ export class MockInterceptor implements HttpInterceptor {
     constructor(@Inject(MOCK_CONFIG) private config: MockConfig) {}
 
     intercept(request: MockRequest, next: HttpHandler) {
-        if (!this.config.disabled) {
-            for (const route of this.config.routes) {
-                const pattern = resolvePath(this.config.prefix || '', route.url);
-                const query = fetchQuery(request.url, pattern);
+        for (const route of this.config.routes) {
+            const pattern = resolvePath(this.config.prefix || '', route.url);
+            const query = fetchQuery(request.url, pattern);
 
-                if (query && request.method === route.method) {
-                    request.query = query;
+            if (query && request.method === route.method) {
+                request.query = query;
 
-                    const response = createHttpResponse(route.handler(request));
-                    const responseDelay = firstValidNumber(
-                        route.delay,
-                        this.config.delay,
-                        DEFAULT_DELAY
-                    );
+                const response = createHttpResponse(route.handler(request));
+                const responseDelay = firstValidNumber(
+                    route.delay,
+                    this.config.delay,
+                    DEFAULT_DELAY
+                );
 
-                    return of(response).pipe(
-                        delay(responseDelay),
-                        tap(() => {
-                            (this.config.logResponse || logResponse)(route, request, response);
-                        })
-                    );
-                }
+                return of(response).pipe(
+                    delay(responseDelay),
+                    tap(() => {
+                        (this.config.logResponse || logResponse)(route, request, response);
+                    })
+                );
             }
         }
 
