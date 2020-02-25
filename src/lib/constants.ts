@@ -22,7 +22,6 @@ export interface MockConfig {
     routes: MockRoutes;
     delay?: number;
     prefix?: string;
-    disabled?: boolean;
     logResponse?: (route: MockRoute, request: MockRequest, response: HttpResponse<any>) => void;
 }
 

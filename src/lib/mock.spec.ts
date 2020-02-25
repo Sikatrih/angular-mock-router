@@ -275,30 +275,6 @@ describe('Interceptor', () => {
             expect(delaySpy).toHaveBeenCalledTimes(1);
         });
 
-        it('should disable interceptor', (done) => {
-            const http = createHttp({
-                routes: [{
-                    url: 'user',
-                    method: 'GET',
-                    handler: () => 'userToken',
-                    delay: 50
-                }],
-                disabled: true
-            });
-
-            http.get('user')
-                .pipe(catchError(err => {
-                    expect(err instanceof HttpErrorResponse).toBeTruthy();
-                    done();
-
-                    return of(err);
-                }))
-                .subscribe((data) => {
-                    expect(data instanceof HttpErrorResponse).toBeTruthy();
-                    done();
-                });
-        });
-
         it('should add "api" to each of prefix', (done) => {
             const http = createHttp({
                 routes: [{
