@@ -1,6 +1,6 @@
 /* tslint:disable */
 
-import { resolvePath, firstValidNumber, fetchQuery, createHttpResponse, logResponse } from './utils';
+import { resolvePath, firstValidNumber, fetchQuery, createHttpResponse, logResponse, isObject, cloneObject } from './utils';
 import { HttpResponse, HttpRequest } from '@angular/common/http';
 
 import { MockRoute, MockRequest } from './constants';
@@ -34,6 +34,52 @@ describe('Utils', () => {
 
         it('should return first valid number', () => {
             expect(firstValidNumber('10', null, 20, [], {}, true, 10)).toBe(20);
+        });
+    });
+
+    describe('isObject', () => {
+        it('should return true', () => {
+            expect(isObject([])).toBeTruthy();
+            expect(isObject({})).toBeTruthy();
+        });
+
+        it('should return false', () => {
+            expect(isObject(HTMLDivElement)).toBeFalsy();
+            expect(isObject(null)).toBeFalsy();
+            expect(isObject(undefined)).toBeFalsy();
+            expect(isObject(10)).toBeFalsy();
+            expect(isObject(0)).toBeFalsy();
+            expect(isObject('')).toBeFalsy();
+            expect(isObject('null')).toBeFalsy();
+            expect(isObject(false)).toBeFalsy();
+        });
+    });
+
+    describe('cloneData', () => {
+        it('should gets array and return clone', () => {
+            const array: number[] = [10];
+            const clone = cloneObject(array);
+
+            expect(clone).toEqual(array);
+            expect(clone).not.toBe(array);
+
+            array.push(20);
+
+            expect(array).toEqual([10, 20]);
+            expect(clone).toEqual([10]);
+        });
+
+        it('should gets object and return clone', () => {
+            const object: {[key: string]: any} = {id: '10'};
+            const clone = cloneObject(object);
+
+            expect(clone).toEqual(object);
+            expect(clone).not.toBe(object);
+
+            object.name = 'origin';
+
+            expect(object).toEqual({id: '10', name: 'origin'});
+            expect(clone).toEqual({id: '10'});
         });
     });
 

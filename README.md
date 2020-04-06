@@ -71,9 +71,9 @@ Routes urls works the similar to angular routes.
 
 In this cases **:id** - are named URL segment that are used to capture the values specified at their position in the URL. The captured values are populated in the **request.query** object, with the name of the route parameter specified in the path as their respective keys.
 
-Route path: /users/:userId/info/:postId
+Route path: /user/:userId/post/:postId
 
-Request URL: http://localhost:4200/users/2/post/21
+Request URL: http://localhost:4200/user/2/post/21
 
 req.query: { "userId": "2", "postId": "21" }
 
