@@ -16,6 +16,14 @@ export const firstValidNumber = (...objects: any[]) => {
     return 0;
 };
 
+export const isObject = (object: any): boolean => {
+    return typeof object === 'object' && object !== null;
+};
+
+export const cloneObject = <T extends any[] | {[key: string]: any}>(object: T) => {
+    return Array.isArray(object) ? [...object] : {...object};
+};
+
 export const fetchQuery = (target: string, pattern: string) => {
     const requestUrlObject = target.replace(/^\/|\/$/gi, '').split('/');
     const routeUrlObject = pattern.replace(/^\/|\/$/gi, '').split('/');
@@ -48,7 +56,10 @@ export const createHttpResponse = (object: any) => {
         return new HttpResponse({status: 204});
     }
 
-    return new HttpResponse({body: object, status: 200});
+    return new HttpResponse({
+        body: isObject(object) ? cloneObject(object) : object,
+        status: 200
+    });
 };
 
 export const logResponse = (route: MockRoute, request: MockRequest, response: HttpResponse<any>) => {
