@@ -52,6 +52,7 @@ describe('Utils', () => {
             expect(isObject('')).toBeFalsy();
             expect(isObject('null')).toBeFalsy();
             expect(isObject(false)).toBeFalsy();
+            expect(isObject(new Blob())).toBeFalsy();
         });
     });
 
@@ -138,6 +139,15 @@ describe('Utils', () => {
 
             expect(createHttpResponse(undefined))
                 .toEqual(new HttpResponse({body: undefined, status: 204}));
+        });
+
+        it('should return response with Blob', () => {
+            const blob = new Blob(['text'], {
+                type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+            });
+
+            expect(createHttpResponse(blob))
+                .toEqual(new HttpResponse({body: blob, status: 200}));
         });
     });
 

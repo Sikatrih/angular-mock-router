@@ -17,7 +17,19 @@ export const firstValidNumber = (...objects: any[]) => {
 };
 
 export const isObject = (object: any): boolean => {
-    return typeof object === 'object' && object !== null;
+    const isObj = typeof object === 'object' && object !== null;
+
+    if (!isObj) {
+        return false;
+    }
+
+    for (const key in object) {
+        if (Object.keys(object).length === 0) {
+            return false;
+        }
+    }
+
+    return true;
 };
 
 export const cloneObject = <T extends any[] | {[key: string]: any}>(object: T) => {
