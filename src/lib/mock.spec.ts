@@ -26,6 +26,21 @@ describe('Interceptor', () => {
                 handler: (req) => `${req.query.id}`
             },
             {
+                url: '/:userId/info',
+                method: 'GET',
+                handler: req => `userId: ${req.query.userId}`
+            },
+            {
+                url: '/:userId/:info',
+                method: 'GET',
+                handler: req => `user => id: ${req.query.userId}, info: ${req.query.info}`
+            },
+            {
+                url: '/user/info',
+                method: 'GET',
+                handler: () => `user info`
+            },
+            {
                 url: '/error',
                 method: 'GET',
                 handler: () => new HttpErrorResponse({status: 404})
@@ -54,7 +69,7 @@ describe('Interceptor', () => {
                 url: '/put',
                 method: 'PUT',
                 handler: (req) => req.body
-            },
+            }
         ];
 
         beforeEach(async(() => {
@@ -118,6 +133,27 @@ describe('Interceptor', () => {
         it('"/user/:id"', done => {
             component.http.get('/user/userId').subscribe(data => {
                 expect(data).toBe('userId');
+                done();
+            })
+        });
+
+        it('"/user/info"', done => {
+            component.http.get('/user/info').subscribe(data => {
+                expect(data).toBe('user info');
+                done();
+            })
+        });
+
+        it('"/user-id/info"', done => {
+            component.http.get('/user-id/info').subscribe(data => {
+                expect(data).toBe('userId: user-id');
+                done();
+            })
+        });
+
+        it('"/user-id/user-info"', done => {
+            component.http.get('/user-id/user-info').subscribe(data => {
+                expect(data).toBe('user => id: user-id, info: user-info');
                 done();
             })
         });

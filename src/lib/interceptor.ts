@@ -3,7 +3,7 @@ import { HttpHandler, HttpInterceptor } from '@angular/common/http';
 import { delay, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
 
-import { MOCK_CONFIG, MockConfig, MockRequest, DEFAULT_DELAY } from './constants';
+import { MOCK_CONFIG, MockConfig, MockRequest, DEFAULT_DELAY, MockRoute, MockQuery } from './constants';
 import { resolvePath, firstValidNumber, fetchQuery, createHttpResponse, logResponse } from './utils';
 
 @Injectable()
@@ -12,29 +12,47 @@ export class MockInterceptor implements HttpInterceptor {
     constructor(@Inject(MOCK_CONFIG) private config: MockConfig) {}
 
     intercept(request: MockRequest, next: HttpHandler) {
+        const suitableRoutes: {route: MockRoute, query: MockQuery}[] = [];
+
         for (const route of this.config.routes) {
             const pattern = resolvePath(this.config.prefix || '', route.url);
             const query = fetchQuery(request.url, pattern);
 
             if (query && request.method === route.method) {
-                request.query = query;
-
-                const response = createHttpResponse(route.handler(request));
-                const responseDelay = firstValidNumber(
-                    route.delay,
-                    this.config.delay,
-                    DEFAULT_DELAY
-                );
-
-                return of(response).pipe(
-                    delay(responseDelay),
-                    tap(() => {
-                        (this.config.logResponse || logResponse)(route, request, response);
-                    })
-                );
+                suitableRoutes.push({route, query});
             }
         }
 
-        return next.handle(request);
+        if (suitableRoutes.length === 0) {
+            return next.handle(request);
+        }
+
+        let minQueryProps = Infinity;
+        let suitableRoute!: {route: MockRoute, query: MockQuery};
+
+        for (const currentRoute of suitableRoutes) {
+            const queryProps = Object.keys(currentRoute.query).length;
+
+            if (queryProps < minQueryProps) {
+                minQueryProps = queryProps;
+                suitableRoute = currentRoute;
+            }
+        }
+
+        request.query = suitableRoute.query;
+
+        const response = createHttpResponse(suitableRoute.route.handler(request));
+        const responseDelay = firstValidNumber(
+            suitableRoute.route.delay,
+            this.config.delay,
+            DEFAULT_DELAY
+        );
+
+        return of(response).pipe(
+            delay(responseDelay),
+            tap(() => {
+                (this.config.logResponse || logResponse)(suitableRoute.route, request, response);
+            })
+        );
     }
 }

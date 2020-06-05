@@ -1,9 +1,11 @@
 import { HttpRequest, HttpResponse } from '@angular/common/http';
 import { InjectionToken } from '@angular/core';
 
-export interface MockQuery {
+export interface DataObject {
     [key: string]: string;
 }
+
+export type MockQuery = DataObject;
 
 export type MockRequest = HttpRequest<any> & {
     query: MockQuery
