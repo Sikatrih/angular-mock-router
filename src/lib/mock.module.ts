@@ -6,7 +6,7 @@ import { MockConfig, MOCK_CONFIG } from './constants';
 
 @NgModule()
 export class MockRouterModule {
-    public static forRoot(config: MockConfig): ModuleWithProviders {
+    public static forRoot(config: MockConfig): ModuleWithProviders<MockRouterModule> {
         return {
             ngModule: MockRouterModule,
             providers: [
