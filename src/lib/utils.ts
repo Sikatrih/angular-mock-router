@@ -37,8 +37,8 @@ export const cloneObject = <T extends any[] | {[key: string]: any}>(object: T) =
 };
 
 export const fetchQuery = (target: string, pattern: string) => {
-    const requestUrlObject = target.replace(/^\/|\/$/gi, '').split('/');
-    const routeUrlObject = pattern.replace(/^\/|\/$/gi, '').split('/');
+    const requestUrlObject = target.replace(/\s/g, '').replace(/^\/|\/$/gi, '').split('/');
+    const routeUrlObject = pattern.replace(/\s/g, '').replace(/^\/|\/$/gi, '').split('/');
 
     if (requestUrlObject.length !== routeUrlObject.length) {
         return null;

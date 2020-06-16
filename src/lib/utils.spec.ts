@@ -93,9 +93,12 @@ describe('Utils', () => {
             expect(fetchQuery('users/10', 'users/id')).toEqual(null);
         });
 
-        it('should return object with id 10', () => {
+        it('should return objects', () => {
             expect(fetchQuery('user', 'user')).toEqual({});
             expect(fetchQuery('/user/', 'user')).toEqual({});
+            expect(fetchQuery('user ', 'user/')).toEqual({});
+            expect(fetchQuery('/user /  ', '/ user ')).toEqual({});
+            expect(fetchQuery('/ user  /  ', '  user ')).toEqual({});
             expect(fetchQuery('user', '/user/')).toEqual({});
             expect(fetchQuery('user/10', 'user/:id')).toEqual({id: '10'});
             expect(fetchQuery('user/10/info', 'user/:id/:section'))
