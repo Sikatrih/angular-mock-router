@@ -6,7 +6,7 @@ import { MockRouterModule } from './mock.module';
 import { MockRoutes, MockConfig } from './constants';
 import { HttpClient, HttpClientModule, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
-import { timer, of } from 'rxjs';
+import { timer } from 'rxjs';
 
 describe('Interceptor', () => {
 
@@ -18,7 +18,12 @@ describe('Interceptor', () => {
             {
                 url: 'user',
                 method: 'GET',
-                handler: () => 'userToken'
+                handler: (req) => 'userToken'
+            },
+            {
+                url: 'user/post/:id',
+                method: 'GET',
+                handler: (req) => req.query
             },
             {
                 url: '/user/:id',
@@ -69,6 +74,11 @@ describe('Interceptor', () => {
                 url: '/put',
                 method: 'PUT',
                 handler: (req) => req.body
+            },
+            {
+                url: '/blob',
+                method: 'GET',
+                handler: (req) => new Blob(['pdf text'], {type: 'application/pdf'})
             }
         ];
 
@@ -103,6 +113,14 @@ describe('Interceptor', () => {
                 )
                 .subscribe(data => {
                     expect(data).toBe('userToken');
+                    done();
+                });
+        });
+
+        it('user/post/:id?name=Alex&age=23', done => {
+            component.http.get('user/post/23?name=Alex&age=23')
+                .subscribe(data => {
+                    expect(data).toEqual({id: '23', name: 'Alex', age: '23'});
                     done();
                 });
         });
@@ -197,6 +215,13 @@ describe('Interceptor', () => {
         it('"/delete"', done => {
             component.http.delete('/delete').subscribe(data => {
                 expect(data).toEqual(null as any)
+                done();
+            });
+        });
+
+        it('"/blob"', done => {
+            component.http.get('/blob').subscribe(data => {
+                expect(data).toEqual(new Blob(['pdf text'], {type: 'application/pdf'}))
                 done();
             });
         });

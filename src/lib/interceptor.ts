@@ -4,7 +4,7 @@ import { delay, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
 
 import { MOCK_CONFIG, MockConfig, MockRequest, DEFAULT_DELAY, MockRoute, MockQuery } from './constants';
-import { resolvePath, firstValidNumber, fetchQuery, createHttpResponse, logResponse } from './utils';
+import { resolvePath, firstValidNumber, fetchQuery, createHttpResponse, logResponse, fetchParams } from './utils';
 
 @Injectable()
 export class MockInterceptor implements HttpInterceptor {
@@ -16,9 +16,14 @@ export class MockInterceptor implements HttpInterceptor {
 
         for (const route of this.config.routes) {
             const pattern = resolvePath(this.config.prefix || '', route.url);
-            const query = fetchQuery(request.url, pattern);
+            const urlParts = request.url.split('?');
+            const query = fetchQuery(urlParts[0], pattern);
 
             if (query && request.method === route.method) {
+                if (urlParts.length > 1) {
+                    Object.assign(query, fetchParams(urlParts[1]));
+                }
+
                 suitableRoutes.push({route, query});
             }
         }

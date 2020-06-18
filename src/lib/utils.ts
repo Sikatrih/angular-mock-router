@@ -1,6 +1,6 @@
 import { HttpResponse } from '@angular/common/http';
 
-import { MockRoute, MockRequest } from './constants';
+import { MockRoute, MockRequest, DataObject } from './constants';
 
 export const resolvePath = (...args: string[]) => {
     return args.join('/').replace(/\/+/g, '/');
@@ -57,6 +57,22 @@ export const fetchQuery = (target: string, pattern: string) => {
     }
 
     return query;
+};
+
+export const fetchParams = (pattern: string) => {
+    const cleanParams = pattern.replace(/\s|\//g, '');
+    const params: DataObject<string> = {};
+    const props = cleanParams.split('&');
+
+    for (const prop of props) {
+        const part = prop.split('=');
+
+        if (part[0]) {
+            params[part[0]] = part[1];
+        }
+    }
+
+    return params;
 };
 
 export const createHttpResponse = (object: any) => {

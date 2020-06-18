@@ -1,6 +1,6 @@
 /* tslint:disable */
 
-import { resolvePath, firstValidNumber, fetchQuery, createHttpResponse, logResponse, isObject, cloneObject } from './utils';
+import { resolvePath, firstValidNumber, fetchQuery, createHttpResponse, logResponse, isObject, cloneObject, fetchParams } from './utils';
 import { HttpResponse, HttpRequest } from '@angular/common/http';
 
 import { MockRoute, MockRequest } from './constants';
@@ -103,6 +103,23 @@ describe('Utils', () => {
             expect(fetchQuery('user/10', 'user/:id')).toEqual({id: '10'});
             expect(fetchQuery('user/10/info', 'user/:id/:section'))
                 .toEqual({id: '10', section: 'info'});
+        });
+    });
+
+    describe('fetchParams', () => {
+        it('should return objects with params', () => {
+            expect(fetchParams('name=ferret&color=purple+red+blur'))
+                .toEqual({name: 'ferret', color: 'purple+red+blur'});
+
+            expect(fetchParams('name=ferret & col / or = pur ple'))
+                .toEqual({name: 'ferret', color: 'purple'});
+
+
+            expect(fetchParams('name'))
+                .toEqual({name: undefined});
+
+            expect(fetchParams(''))
+                .toEqual({});
         });
     });
 
