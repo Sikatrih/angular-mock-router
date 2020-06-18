@@ -61,7 +61,7 @@ export const fetchQuery = (target: string, pattern: string) => {
 
 export const fetchParams = (pattern: string) => {
     const cleanParams = pattern.replace(/\s|\//g, '');
-    const params: DataObject<string> = {};
+    const params: DataObject<string | undefined> = {};
     const props = cleanParams.split('&');
 
     for (const prop of props) {

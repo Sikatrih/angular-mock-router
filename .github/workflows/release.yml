@@ -26,8 +26,6 @@ jobs:
     - run: npm test
     - run: npm run build
     - run: cp ./README.md ./release
-    - run: cd ./src && npm version patch
-    - run: cd ./release && npm version patch
     - run: npm config set '//registry.npmjs.org/:_authToken' "${{secrets.NPM_AUTH_TOKEN}}"
     - run: cd ./release && npm publish
       env:
