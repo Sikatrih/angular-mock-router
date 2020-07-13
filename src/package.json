@@ -1,6 +1,6 @@
 {
     "name": "angular-mock-router",
-    "version": "0.9.12",
+    "version": "1.0.0",
     "description": "lightweight tool that intercepts Http Requests and send you your own responses instead backend",
     "author": "Abramian Amaiak",
     "repository": {
