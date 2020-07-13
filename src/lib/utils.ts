@@ -36,9 +36,20 @@ export const cloneObject = <T extends any[] | {[key: string]: any}>(object: T) =
     return Array.isArray(object) ? [...object] : {...object};
 };
 
+export const clearUrl = (url: string) => {
+    return url.replace(/\s/g, '').replace(/\/+/gi, '/').replace(/^\/|\/$/gi, '');
+};
+
 export const fetchQuery = (target: string, pattern: string) => {
-    const requestUrlObject = target.replace(/\s/g, '').replace(/^\/|\/$/gi, '').split('/');
-    const routeUrlObject = pattern.replace(/\s/g, '').replace(/^\/|\/$/gi, '').split('/');
+    target = clearUrl(target);
+    pattern = clearUrl(pattern);
+
+    if (target === '' && pattern !== '') {
+        return null;
+    }
+
+    const requestUrlObject = clearUrl(target).split('/');
+    const routeUrlObject = clearUrl(pattern).split('/');
 
     if (requestUrlObject.length !== routeUrlObject.length) {
         return null;

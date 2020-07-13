@@ -1,6 +1,6 @@
 /* tslint:disable */
 
-import { resolvePath, firstValidNumber, fetchQuery, createHttpResponse, logResponse, isObject, cloneObject, fetchParams } from './utils';
+import { resolvePath, firstValidNumber, fetchQuery, createHttpResponse, logResponse, isObject, cloneObject, fetchParams, clearUrl } from './utils';
 import { HttpResponse, HttpRequest } from '@angular/common/http';
 
 import { MockRoute, MockRequest } from './constants';
@@ -84,8 +84,20 @@ describe('Utils', () => {
         });
     });
 
+    describe('clearUrl', () => {
+        it('should clean string with url', () => {
+            expect(clearUrl('/')).toBe('');
+            expect(clearUrl('/ / //')).toBe('');
+            expect(clearUrl('/user/')).toBe('user');
+            expect(clearUrl('/user/id')).toBe('user/id');
+            expect(clearUrl('/user/id/')).toBe('user/id');
+            expect(clearUrl('///da/ff // fc')).toBe('da/ff/fc');
+        });
+    });
+
     describe('fetchQuery', () => {
         it('should return "null" if paths has different length', () => {
+            expect(fetchQuery('', ':id')).toBe(null);
             expect(fetchQuery('myusers', 'users')).toBe(null);
             expect(fetchQuery('users/', 'users/10')).toBe(null);
             expect(fetchQuery('users/10/info', 'users/:id')).toBe(null);
